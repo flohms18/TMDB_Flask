@@ -2,10 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flask + CSS</title>
+    <title>TmDB App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <h1>Hello from Flask!</h1>
+<h1>Search TMDB</h1>
+  <form method="get">
+    <input type="text" name="query" placeholder="Enter movie name">
+    <input type="submit" value="Search">
+  </form>
+
+  {% if results %}
+    <h2>Results:</h2>
+    <ul>
+      {% for movie in results %}
+        <li><strong>{{ movie.title }}</strong> ({{ movie.release_date }})</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 </body>
 </html>
