@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>TmDB App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Movie Search</title>
 </head>
-<h1>Search TMDB</h1>
-  <form method="get">
-    <input type="text" name="query" placeholder="Enter movie name">
-    <input type="submit" value="Search">
-  </form>
+<body>
+    <form action="/" method="get">
+        <input type="text" name="query" placeholder="Search for a movie">
+        <button type="submit">Search</button>
+    </form>
 
-  {% if results %}
-    <h2>Results:</h2>
-    <ul>
-      {% for movie in results %}
-        <li><strong>{{ movie.title }}</strong> ({{ movie.release_date }})</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+    {% if results %}
+        <h2>Search Results</h2>
+        <ul>
+            {% for movie in results %}
+                <li>
+                    <form method="post">
+                        {{ movie.title }} ({{ movie.release_date }})
+                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                        <button type="submit">View Details</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if selected_movie %}
+        <h2>Movie Details</h2>
+        <p><strong>Title:</strong> {{ selected_movie.title }}</p>
+        <p><strong>Overview:</strong> {{ selected_movie.overview }}</p>
+        <p><strong>Release Date:</strong> {{ selected_movie.release_date }}</p>
+        <p><strong>Rating:</strong> {{ selected_movie.vote_average }}</p>
+    {% endif %}
 </body>
 </html>
